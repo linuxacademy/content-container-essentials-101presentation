@@ -9,6 +9,13 @@ If you are not running on a CentOS v7 box, ensure that your kernel is running ve
 3.10.0-862.9.1.el7.x86_64
 ``` 
 
+## Install required packages. 
+```
+$ sudo yum install -y yum-utils \
+  device-mapper-persistent-data \
+  lvm2
+```
+
 ## Setting up the Repository
 
 Add the docker repository to your server to ensure that you have the latest version using the `sudo yum-config-manager \ --add-repo \` command. When you do so, the GPG key will be verified. As of publishing this guide, the fingerprint is *060A 61C5 1B55 8A7F 742B 77AA C52F EB6B 621E 9F35*:
