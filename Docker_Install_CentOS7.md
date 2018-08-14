@@ -58,9 +58,9 @@ For best practices, do not use *root*. Instead, add your user to the Docker grou
 [user@ellmarquez1 ~]$
 ```
 
-Confirm the change with the `cat` command:
+Confirm the change with the `grep` command:
 ```
-[user@eellmarquez1 ~]$ cat /etc/group |grep docker
+[user@eellmarquez1 ~]$ grep docker /etc/group
 docker:x:987:user
 ``` 
 
