@@ -2,7 +2,7 @@
 The notes below accompany the Linux Academy Docker Certified Associate Prep Course videos:
 * [Setting up Swarm (Configure Managers)](https://linuxacademy.com/cp/courses/lesson/course/1376/lesson/5/module/2972)
 * [Setting up Swarm (Add Nodes)](https://linuxacademy.com/cp/courses/lesson/course/1376/lesson/6/module/150)
-* [Setting up Swarm( Backup and Restore)](https://linuxacademy.com/cp/courses/lesson/course/1376/lesson/7/module/150)
+* [Setting up Swarm (Backup and Restore)](https://linuxacademy.com/cp/courses/lesson/course/1376/lesson/7/module/150)
 
 
 ## Configure Managers
@@ -20,13 +20,14 @@ docker swarm init --advertise-addr 172.31.21.64
 Swarm initialized: current node (6h59lkua4alffyoneglx6l427) is now a manager.
 ```
  
-- To add a worker to this swarm, run the following command:
-   
+- After successfully initializing the swarm and adding the first node as a manager, Docker will give you the command to add workers:
+  
 ``` 
 docker swarm join --token SWMTKN-1-40xcrb7c92mjnapxvoulp15zkky0zopk7u8cc6yd9vglya12v6-epqvj5m5859m05fry5x1p02dg 172.31.21.64:2377
 ```
 
-- However, we can request the token be provided again:
+- The first string after SWMTKN-1 is a unique identifier for the swarm, the second is the key for whether the node joins the swarm as a manager or worker.
+- We can request the token be provided again:
 
 ```  
 [user@manager1 ~]$ docker swarm join-token worker
@@ -43,6 +44,7 @@ docker swarm join --token SWMTKN-1-40xcrb7c92mjnapxvoulp15zkky0zopk7u8cc6yd9vgly
 docker swarm join-token manager
 ```
 
+- Then run the command Docker provides on the node you want to add as a manager.
 - To see what nodes are currently configured:
 
 ```
