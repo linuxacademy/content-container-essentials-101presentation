@@ -8,11 +8,12 @@
     
 1. To check your Docker Storage driver is: 
       ` docker info |grep Storage` 
-    - Overaly is the default 
-    - Overly 2 is supported on Fedora kernel v4 tree  but not currently CentOS v3 tree. 
+    - Overlay is the default 
+    - Overlay2 is recommended and will be enabled by default if your kernel supports it (Kernel version 4+, or 3.10.0-514+ if using RHEL or Centos). 
+    - Using Overlay2 on kernel 3.10.0-514+ requires an override -- see the [Docker Docs](https://docs.docker.com/storage/storagedriver/overlayfs-driver/#configure-docker-with-the-overlay-or-overlay2-storage-driver) for details.
 
 
-2. Inside of your /etc/docker file there is a key.json file
+2. Inside of your /etc/docker file there is a key.json file - this contains TLS keys for connecting to registries or other Docker services
   1.  We need to create a dameon.json file that will contain our configuration information for the Docker daemon to pull its information from.  (We are using “devicemapper” for our example.) 
   
    ` sudo vim /etc/docker/daemon.json`
@@ -21,23 +22,23 @@
 
 
 3. Restart Docker.
-  1. Note you will lose the images on your system. If they are needed you will need to back them up before restarting Docker. 
-   ` sudo systemctl restart docker`
-- confirm Docker status as any typos will cause the service not to start up again.
-   ``` [user@ellmarquez1 ~]$ sudo systemctl restart docker
-    [user@ellmarquez1 ~]$ sudo systemctl status docker
-    ● docker.service - Docker Application Container Engine
-       Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled; vendor preset: disabled)
-       Active: active (running) since Tue 2018-08-14 16:42:49 UTC; 8s ago
-         Docs: https://docs.docker.com
-     Main PID: 2029 (dockerd)
-        Tasks: 17
-       Memory: 46.1M
-       CGroup: /system.slice/docker.service
-               ├─2029 /usr/bin/dockerd
-               └─2035 docker-containerd --config /var/run/docker/containerd/containerd.toml
+   - Note you will lose the images on your system. If they are needed you will need to back them up before restarting Docker. 
+     ` sudo systemctl restart docker`
+   - confirm Docker status as any typos will cause the service not to start up again.
+     ``` [user@ellmarquez1 ~]$ sudo systemctl restart docker
+      [user@ellmarquez1 ~]$ sudo systemctl status docker
+      ● docker.service - Docker Application Container Engine
+         Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled; vendor preset: disabled)
+         Active: active (running) since Tue 2018-08-14 16:42:49 UTC; 8s ago
+           Docs: https://docs.docker.com
+       Main PID: 2029 (dockerd)
+          Tasks: 17
+         Memory: 46.1M
+         CGroup: /system.slice/docker.service
+                 ├─2029 /usr/bin/dockerd
+                 └─2035 docker-containerd --config /var/run/docker/containerd/containerd.toml
 4. Confirm changes: 
-     `docker info |grep Storage`
+     `docker info | grep Storage`
 
         [user@ellmarquez1 ~]$ docker info| grep Storage
         WARNING: devicemapper: usage of loopback devices is strongly discouraged for production use.
